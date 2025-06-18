@@ -11,6 +11,12 @@ urlpatterns = [
     path('blog_list/', views.blog_list , name='blog_list'),
     path('add_blogs/', views.add_blogs , name='add_blogs'),
     path('comments/', views.comments , name='comments'),
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
+    path('forgot_password/', views.forgot_pas , name='forgot_pas'),
+    path('verify_otp/', views.verify_otp , name='verify_otp'),
+    path('reset_password/', views.reset_pas , name='reset_pas'),
+    path('logout/', views.logout_view, name='logout'),
    
 ]
 if settings.DEBUG:
