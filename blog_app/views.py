@@ -12,7 +12,8 @@ from .forms import BlogForm
 
 # Create your views here.
 def home(request):
-    return render(request, 'blogapp/home.html')
+    blogs = Blog.objects.all()
+    return render(request, 'blogapp/home.html', {'blogs': blogs})
 
 
 
@@ -133,8 +134,8 @@ def dashboard(request):
     blogs = Blog.objects.all()
     return render(request, 'blogapp/dashboard.html', {'blogs':blogs})
 
-def blog_detail(request, title):
-    blog = get_object_or_404(Blog, title=title)
+def blog_detail(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
     return render(request, 'blogapp/blog_detail.html', {'blog':blog})
 
 def blog_list(request):
@@ -149,11 +150,13 @@ def add_blogs(request):
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
             return redirect('dashboard')
     else:
         form=BlogForm()
-    return render(request, 'blogapp/add_blogs.html', {'form': form })
+    return render(request, 'blogapp/add_blogs.html', {'form': form})
 
 def edit_view(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
@@ -164,7 +167,7 @@ def edit_view(request, pk):
             return redirect('dashboard')
     else:
         form=BlogForm(instance=blog)
-    return render(request, 'blogapp/add_blogs.html', {'form':form})
+    return render(request, 'blogapp/add_blogs.html', {'form':form , 'blog':blog})
 
 def delete_view(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
