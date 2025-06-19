@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from .models import Blog
+from .forms import BlogForm
 
 # Create your views here.
 def home(request):
@@ -128,18 +130,47 @@ def logout_view(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    return render(request, 'blogapp/dashboard.html')
+    blogs = Blog.objects.all()
+    return render(request, 'blogapp/dashboard.html', {'blogs':blogs})
 
-def blog_detail(request):
-    return render(request, 'blogapp/blog_detail.html')
+def blog_detail(request, title):
+    blog = get_object_or_404(Blog, title=title)
+    return render(request, 'blogapp/blog_detail.html', {'blog':blog})
 
 def blog_list(request):
-    return render(request, 'blogapp/blog_list.html')
+    blogs = Blog.objects.all()
+    return render(request, 'blogapp/blog_list.html', {'blogs':blogs})
 
 def comments(request):
     return render(request, 'blogapp/comments.html')
 
+@login_required(login_url='login')
 def add_blogs(request):
-    return render(request, 'blogapp/add_blogs.html')
-        
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form=BlogForm()
+    return render(request, 'blogapp/add_blogs.html', {'form': form })
+
+def edit_view(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    if request.method == 'POST':
+        form = BlogForm(request.POST, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form=BlogForm(instance=blog)
+    return render(request, 'blogapp/add_blogs.html', {'form':form})
+
+def delete_view(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    if request.method == 'POST':
+        blog.delete()
+        return redirect('dashboard')
+    return render(request, 'blogapp/delete.html')
+
 

@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [
     path('', views.home , name='home'),
     path('dashboard/', views.dashboard , name='dashboard'),
-    path('blog_detail/', views.blog_detail , name='blog_detail'),
+    path('blog_detail/<str:title>', views.blog_detail , name='blog_detail'),
     path('blog_list/', views.blog_list , name='blog_list'),
     path('add_blogs/', views.add_blogs , name='add_blogs'),
     path('comments/', views.comments , name='comments'),
@@ -17,6 +17,9 @@ urlpatterns = [
     path('verify_otp/', views.verify_otp , name='verify_otp'),
     path('reset_password/', views.reset_pas , name='reset_pas'),
     path('logout/', views.logout_view, name='logout'),
+    path('edit/<int:pk>', views.edit_view , name='edit'),
+    path('delete/<int:pk>', views.delete_view , name='delete'),
+
    
 ]
 if settings.DEBUG:

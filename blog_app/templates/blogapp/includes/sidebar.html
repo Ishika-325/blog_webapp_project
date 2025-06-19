@@ -1,0 +1,9 @@
+<!-- Sidebar -->
+    <aside class="w-64 h-[calc(100vh-4rem)] sticky self-start bg-white rounded-lg shadow p-6">
+      <nav class="space-y-4 text-lg">
+        <a href="{% url 'dashboard' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">📊 Dashboard</a>
+        <a href="{% url 'blog_list' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">📃 Blog List</a>
+        <a href="{% url 'add_blogs' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">➕ Add Blog</a>
+        <a href="{% url 'comments' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">💬 Comments</a>
+      </nav>
+    </aside>

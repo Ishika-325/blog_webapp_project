@@ -6,8 +6,14 @@
   <title>Comments - MintBlog</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-indigo-50 text-gray-800 font-sans">
-  <section class="max-w-2xl mx-auto py-12 px-6">
+<body class=" bg-indigo-50 text-gray-800 font-sans">
+
+  {% include 'blogapp/includes/navbar.html' %}
+  <div class='flex'>
+
+  {% include  'blogapp/includes/sidebar.html' %}
+
+  <section class="max-w-2xl mx-5 py-6 px-6">
     <h2 class="text-3xl font-bold text-indigo-900 mb-6">Comments</h2>
 
     <div class="space-y-4">
@@ -27,5 +33,6 @@
       <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded">Post Comment</button>
     </form>
   </section>
+</div>
 </body>
 </html>
