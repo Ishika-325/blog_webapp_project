@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 import random
 from django.core.mail import send_mail
-from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from .models import Blog
@@ -12,9 +11,18 @@ from .forms import BlogForm
 
 # Create your views here.
 def home(request):
-    blogs = Blog.objects.all()
-    return render(request, 'blogapp/home.html', {'blogs': blogs})
-
+    selected_category = request.GET.get('category')
+    if selected_category:
+        blogs = Blog.objects.filter(category=selected_category)
+    else:
+        blogs = Blog.objects.all()
+    
+    context = {
+        'blogs': blogs,
+        'categories': Blog.CATEGORIES,
+        'selected_category': selected_category,
+    }
+    return render(request, 'blogapp/home.html', context)
 
 
 def login_view(request):
