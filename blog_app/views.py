@@ -131,19 +131,22 @@ def logout_view(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.filter(author=request.user)
     return render(request, 'blogapp/dashboard.html', {'blogs':blogs})
 
 def blog_detail(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     return render(request, 'blogapp/blog_detail.html', {'blog':blog})
 
+@login_required(login_url='login')
 def blog_list(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.filter(author=request.user)
     return render(request, 'blogapp/blog_list.html', {'blogs':blogs})
 
+@login_required(login_url='login')
 def comments(request):
-    return render(request, 'blogapp/comments.html')
+    blogs = Blog.objects.filter(author=request.user)
+    return render(request, 'blogapp/comments.html', {'blogs':blogs})
 
 @login_required(login_url='login')
 def add_blogs(request):
@@ -158,6 +161,7 @@ def add_blogs(request):
         form=BlogForm()
     return render(request, 'blogapp/add_blogs.html', {'form': form})
 
+@login_required(login_url='login')
 def edit_view(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     if request.method == 'POST':
@@ -169,6 +173,7 @@ def edit_view(request, pk):
         form=BlogForm(instance=blog)
     return render(request, 'blogapp/add_blogs.html', {'form':form , 'blog':blog})
 
+@login_required(login_url='login')
 def delete_view(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     if request.method == 'POST':

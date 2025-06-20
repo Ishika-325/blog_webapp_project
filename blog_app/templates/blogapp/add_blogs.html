@@ -6,14 +6,14 @@
   <title>Add Blog - MintBlog</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-indigo-50 text-gray-800 font-sans">
+<body class="bg-blue-50 text-gray-800 font-sans">
 
   {% include 'blogapp/includes/navbar.html' %}
 
-  <div class='flex'>
+  <div class='max-[470px]:flex-col flex w-full'>
     {% include 'blogapp/includes/sidebar.html' %}
 
-  <section class="max-w-3xl mx-5 py-12 px-6">
+  <section class=" md:w-[600px] mx-5 py-12 px-6">
     <h2 class="text-3xl font-bold text-indigo-900 mb-6">{% if blog %}Edit Blog{% else %}Create New Blog{% endif %}</h2>
 
     <form method='post'>
@@ -21,8 +21,48 @@
       <label class="block mb-2 font-medium">Title</label>
       <input type="text" name='title' value="{{ blog.title|default:'' }}" class="w-full border border-gray-300 rounded p-3 mb-4" placeholder="Blog title" />
 
+       <p class="block mb-2 font-medium">Category</p>
+       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Technology" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Technology</span>
+    </label>
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Lifestyle" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Lifestyle</span>
+    </label>
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Education" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Education</span>
+    </label>
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Health & Wellness" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Health & Wellness</span>
+    </label>
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Business & Finance" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Business & Finance</span>
+    </label>
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Travel & Culture" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Travel & Culture</span>
+    </label>
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Entertainment" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Entertainment</span>
+    </label>
+    <label class="inline-flex items-center space-x-2">
+      <input type="checkbox" name="category" value="Personal Growth" class="text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500">
+      <span class="text-gray-800 text-sm">Personal Growth</span>
+    </label>
+  </div>
+
+      
       <label class="block mb-2 font-medium">Content</label>
       <textarea name='content'  class="w-full border border-gray-300 rounded p-3 mb-4" rows="8" placeholder="Write your blog...">{{blog.content|default:''}}</textarea>
+
+      <!-- Blog Category Dropdown -->
+      
 
       <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded">Publish</button>
     </form>

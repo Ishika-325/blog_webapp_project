@@ -1,9 +1,20 @@
 <!-- Sidebar -->
-    <aside class="w-64 h-[calc(100vh-4rem)] sticky self-start bg-white rounded-lg shadow p-6">
-      <nav class="space-y-4 text-lg">
+    <aside class="w-64 max-[470px]:hidden max-[600px]:w-40 h-[calc(100vh-4rem)]  sticky self-start bg-white rounded-lg shadow p-6">
+      <nav class="space-y-4 text-lg max-[600px]:text-sm">
         <a href="{% url 'dashboard' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">📊 Dashboard</a>
         <a href="{% url 'blog_list' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">📃 Blog List</a>
         <a href="{% url 'add_blogs' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">➕ Add Blog</a>
         <a href="{% url 'comments' %}" class="block text-indigo-700 font-semibold hover:text-indigo-900">💬 Comments</a>
       </nav>
     </aside>
+
+    <aside class="w-full min-[470px]:hidden bg-white rounded-lg shadow p-2">
+      <nav class="gap-3 text-sm flex justify-center ">
+        <a href="{% url 'dashboard' %}" class=" text-indigo-700 font-semibold hover:text-indigo-900"> Dashboard</a>
+        <a href="{% url 'blog_list' %}" class=" text-indigo-700 font-semibold hover:text-indigo-900"> Blog List</a>
+        <a href="{% url 'add_blogs' %}" class=" text-indigo-700 font-semibold hover:text-indigo-900"> Add Blog</a>
+        <a href="{% url 'comments' %}" class=" text-indigo-700 font-semibold hover:text-indigo-900"> Comments</a>
+      </nav>
+    </aside>
+
+    

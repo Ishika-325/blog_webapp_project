@@ -6,6 +6,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=100)
     content=models.TextField()
     created_on=models.DateField(auto_now_add=True)
+    category=models.CharField(max_length=100, default='select')
     
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 

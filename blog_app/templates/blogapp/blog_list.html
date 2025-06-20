@@ -6,21 +6,23 @@
   <title>All Blogs - MintBlog</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-indigo-50 text-gray-800 font-sans">
+<body class="bg-blue-50 text-gray-800 font-sans">
    {% include 'blogapp/includes/navbar.html' %}
 
-  <div class='flex'>
+  <div class='max-[470px]:flex-col flex'>
     {% include  'blogapp/includes/sidebar.html' %}
 
   <section class="py-12 max-w-6xl mx-auto px-6">
     <h2 class="text-3xl font-bold mb-10 text-center text-indigo-900">Explore Blogs</h2>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for blog in blogs %}
       <div class="bg-white p-6 rounded shadow">
-        <h3 class="text-xl font-semibold text-purple-700 mb-2">The Beauty of Writing</h3>
-        <p class="text-sm text-gray-600 mb-3">by Anvika · June 15, 2025</p>
-        <p class="mb-4">Discover how writing transformed my daily routine into something magical...</p>
+        <h3 class="text-xl font-semibold text-purple-700 mb-2">{{blog.title}}</h3>
+        <p class="text-sm text-gray-600 mb-3">{{blog.author.username}} · {{blog.created_on}}</p>
+        <p class="mb-4 line-clamp-3">{{blog.content}}</p>
         <a href="blog-detail.html" class="text-indigo-700 hover:underline font-medium">Read More</a>
       </div>
+      {% endfor %}
       <!-- Add more cards similarly -->
     </div>
   </section>

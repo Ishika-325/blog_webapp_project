@@ -7,13 +7,13 @@
   <title>Dashboard - MintBlog</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-indigo-50 text-gray-800 font-sans">
+<body class="bg-blue-50 text-gray-800 font-sans">
 
   <!-- Header -->
    {% include 'blogapp/includes/navbar.html' %}
 
   <!-- Main Content with Sidebar -->
-  <div class="max-w-7xl mx-auto flex gap-6">
+  <div class="max-w-7xl  flex max-[470px]:flex-col gap-6">
     
     {% include  'blogapp/includes/sidebar.html' %}
 
@@ -25,6 +25,7 @@
         <div class="bg-white p-6 rounded shadow hover:shadow-lg transition duration-300">
           <h3 class="text-xl font-semibold text-purple-700 mb-2">{{ blog.title }}</h3>
           <p class="text-gray-600 mb-4">{{ blog.created_on|date:"M d, Y" }}</p>
+          <p class="mb-4 line-clamp-3">{{blog.content}}</p>
           <div class="flex gap-4">
             <a href="{% url 'edit' blog.pk %}" class="text-indigo-600 hover:underline">Edit</a>
             <a href="{% url 'delete' blog.pk %}" class="text-red-500 hover:underline">Delete</a>
