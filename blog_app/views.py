@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from .models import Blog
 from .forms import BlogForm
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -16,6 +17,13 @@ def home(request):
         blogs = Blog.objects.filter(category=selected_category)
     else:
         blogs = Blog.objects.all()
+
+    query = request.GET.get("q")
+    if query:
+        blogs = blogs.filter(
+            Q(title__icontains=query) |
+            Q(author__username__icontains=query)
+        )
     
     context = {
         'blogs': blogs,
@@ -172,6 +180,11 @@ def add_blogs(request):
 @login_required(login_url='login')
 def edit_view(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
+
+    if blog.author != request.user:
+        messages.error(request, "You are not authorized to edit this blog.")
+        return redirect('dashboard')
+
     if request.method == 'POST':
         form = BlogForm(request.POST, instance=blog)
         if form.is_valid():
@@ -184,6 +197,11 @@ def edit_view(request, pk):
 @login_required(login_url='login')
 def delete_view(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
+
+    if blog.author != request.user:
+        messages.error(request, "You are not authorized to edit this blog.")
+        return redirect('dashboard')
+
     if request.method == 'POST':
         blog.delete()
         return redirect('dashboard')

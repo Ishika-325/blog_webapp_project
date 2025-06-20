@@ -116,6 +116,11 @@
   
 </div>
 
+   {% if request.GET.q %}
+  <p class="text-center text-sm text-indigo-700 mb-4">
+    Showing results for "<strong>{{ request.GET.q }}</strong>"
+  </p>
+  {% endif %}
     <div class="grid md:grid-cols-3 gap-8">
       {% for blog in blogs %}
       <div class="bg-white rounded shadow-md p-5 hover:shadow-lg transition">
