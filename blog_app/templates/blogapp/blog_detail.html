@@ -22,7 +22,7 @@
     <p class="text-sm text-gray-600 mb-6"> By {{blog.author.username}} · {{blog.created_on}}</p>
     <p class="mb-6 leading-relaxed">{{blog.content}}</p>
 
-    <a href="comments.html" class="text-purple-700 hover:underline">View Comments</a>
+    <a href="{% url 'comments' %}?blog_id={{ blog.id }}" class="text-purple-700 hover:underline">View Comments</a>
   </section>
 
   <footer class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center p-4">

@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Blog
 from .forms import BlogForm
 from django.db.models import Q
+from .forms import CommentForm
+from .models import Comment
 
 # Create your views here.
 def home(request):
@@ -31,6 +33,26 @@ def home(request):
         'selected_category': selected_category,
     }
     return render(request, 'blogapp/home.html', context)
+
+
+def comments(request):
+    blog_id = request.GET.get('blog_id')
+    blog = get_object_or_404(Blog, id=blog_id)
+    commentss = Comment.objects.filter(blog=blog).order_by('created_on')
+    form = CommentForm()
+    if request.method == 'POST':
+         if request.user.is_authenticated:
+             form = CommentForm(request.POST)
+             if form.is_valid():
+                comment = form.save(commit=False)
+                comment.author = request.user
+                comment.blog = blog
+                comment.save()
+                return redirect(f'/comments?blog_id={blog.id}')
+         else:
+             messages.error(request, "Please log in to post comment")
+
+    return render(request, 'blogapp/comments.html', {'form':form, 'commentss':commentss})
 
 
 def login_view(request):
@@ -160,9 +182,10 @@ def blog_list(request):
     return render(request, 'blogapp/blog_list.html', {'blogs':blogs})
 
 @login_required(login_url='login')
-def comments(request):
+def my_comments(request):
     blogs = Blog.objects.filter(author=request.user)
-    return render(request, 'blogapp/comments.html', {'blogs':blogs})
+    commentss = Comment.objects.filter(blog__in=blogs).select_related('author', 'blog').order_by('created_on')
+    return render(request, 'blogapp/my_comments.html', {'blogs':blogs, 'commentss':commentss})
 
 @login_required(login_url='login')
 def add_blogs(request):
@@ -205,6 +228,4 @@ def delete_view(request, pk):
     if request.method == 'POST':
         blog.delete()
         return redirect('dashboard')
-    return render(request, 'blogapp/delete.html')
-
-
+    return render(request, 'blogapp/delete.html')  

@@ -8,30 +8,45 @@
 </head>
 <body class=" bg-blue-50 text-gray-800 font-sans">
 
-  {% include 'blogapp/includes/navbar.html' %}
-  <div class='max-[470px]:flex-col flex'>
-
-  {% include  'blogapp/includes/sidebar.html' %}
-
-  <section class="max-w-2xl mx-5 py-6 px-6">
+  <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4 shadow">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">MintBlog</h1>
+      <nav class="space-x-6 text-lg">
+        <a href="{% url 'home' %}" class="hover:underline">Home</a>
+        <a href="{% url 'dashboard' %}" class="hover:underline">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+  
+  
+  <div class=''>
+  <section class="max-w-4xl  mx-auto py-6 px-6">
     <h2 class="text-3xl font-bold text-indigo-900 mb-6">Comments</h2>
 
+    {% if user.is_authenticated %}
+    <form method='POST' class="my-8">
+      {% csrf_token %}
+      <label class="block text-md font-medium mb-1">Add a comment</label>
+      <textarea class="w-full border border-gray-300 rounded p-3 mb-1" name="content" rows="4" placeholder="Write your comment..."></textarea>
+      <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-1 rounded">Post Comment</button>
+    </form>
+    {% else %}
+    <p class="text-red-600">You must <a href="{% url 'login' %}" class="underline">log in</a> to post a comment.</p>
+    {% endif %}
+
     <div class="space-y-4">
+      {% for comment in commentss%}
       <div class="bg-white p-4 rounded shadow">
-        <p class="font-semibold text-purple-700">Riya</p>
-        <p>Loved this post! Really inspiring.</p>
+        <div class='flex justify-between'>
+        <p class="font-semibold text-purple-700">{{comment.author.username}}</p>
+        <p class='text-gray-600 font-sm '>{{comment.created_on}}</p>
+        </div>
+        <p>{{comment.content}}</p>
       </div>
-      <div class="bg-white p-4 rounded shadow">
-        <p class="font-semibold text-purple-700">Shaun</p>
-        <p>Would love to read more on this topic!</p>
-      </div>
+      {% endfor %}
     </div>
 
-    <form class="mt-8">
-      <label class="block text-sm font-medium mb-1">Add a comment</label>
-      <textarea class="w-full border border-gray-300 rounded p-3 mb-4" rows="4" placeholder="Write your comment..."></textarea>
-      <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded">Post Comment</button>
-    </form>
+    
   </section>
 </div>
 </body>

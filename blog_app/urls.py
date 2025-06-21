@@ -10,7 +10,7 @@ urlpatterns = [
     path('blog_detail/<int:pk>', views.blog_detail , name='blog_detail'),
     path('blog_list/', views.blog_list , name='blog_list'),
     path('add_blogs/', views.add_blogs , name='add_blogs'),
-    path('comments/', views.comments , name='comments'),
+    path('my_comments/', views.my_comments , name='my_comments'),
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),
     path('forgot_password/', views.forgot_pas , name='forgot_pas'),
@@ -19,6 +19,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('edit/<int:pk>', views.edit_view , name='edit'),
     path('delete/<int:pk>', views.delete_view , name='delete'),
+    path('comments/', views.comments, name='comments')
 
    
 ]

@@ -18,9 +18,17 @@ class Blog(models.Model):
     title = models.CharField(max_length=100)
     content=models.TextField()
     created_on=models.DateField(auto_now_add=True)
-    category=models.CharField(max_length=100, choices=CATEGORIES)
+    category=models.CharField(max_length=100)
+
     
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.title} created on {self.created_on}"
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_on = models.DateField(auto_now=True)
+    
